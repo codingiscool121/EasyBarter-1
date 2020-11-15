@@ -22,8 +22,21 @@ firebase.auth().signInWithEmailAndPassword(emailId,password).then(()=>{
         alert("Welcome,"+ emailId +"!")
     )
 }).catch(error=>{
-    alert("We could not sign you in. Here is the error we got: "+ error.message + " Please try to fix this error, and then try again.");
-})
+    switch(error.code){
+        case 'auth/user-not-found':
+            alert("It appears that you don't have an account with EasyBarter "+ emailId +". Instead of clicking the Login button, please click the sign up button first. 🧾");
+            console.log(error.message)
+        break;
+        case 'auth/invalid-email':
+            alert("Your email is invalid. You should format it to be something like example@domain.com.");
+            console.log(error.message)
+            break;
+        case 'auth/wrong-password':
+            alert("Your password is invalid, "+ emailId + "! Please enter the correct password to continue.");
+            console.log(error.message)
+            break;
+        
+    }})
 }
 signup=(emailId,password)=>{
     console.log(emailId);
@@ -111,12 +124,3 @@ const styles= StyleSheet.create({
         color:"#c39b77"
     }
 })
-
-
-
-
-
-    
-
-
-
